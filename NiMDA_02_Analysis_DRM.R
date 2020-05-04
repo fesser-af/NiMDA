@@ -5,14 +5,14 @@
 ## Dose-response curves over time of drug exposure
 ## Author : Anna Fesser
 ## date : 22.05.2019
-## last modified : 17.12.2019
+## last modified : 21.04.2020
 ## ==============================================
 
 # This script is intended to be used to build dose-response models from parasite counts produced by time-lapse imaging (Fesser et al. 2020)
 
 # It is intended to be used with time-lapse data from high-content imaging
 # The different parameters should be adapted to your needs
-# Copyright (C) <2019> <Anna F. Fesser, Olivier Braissant, Francisco Olmo, 
+# Copyright (C) <2020> <Anna F. Fesser, Olivier Braissant, Francisco Olmo, 
 # John M. Kelly, Pascal Mäser, Marcel Kaiser>
 
 # This program is free software: you can redistribute it and/or modify
@@ -67,6 +67,10 @@ plates.used <- unique(GC.site.live$plate.name)
 DRC.fixed.Nr.par.simulated <- data.frame(plate.name = character(), read.date = character(), 
                                          drug.exp = numeric(), 
                                          pos.mean = numeric(),
+                                         EC50 = numeric(),
+                                         Hill = numeric(),
+                                         Bottom = numeric(),
+                                         Top = numeric(),
                                          Molar.sim = numeric(), Molar.sim.log10 = numeric(),
                                          sim.gro = numeric(), sim.par = numeric())
 
@@ -138,7 +142,11 @@ for (pn in 1:length(plates.used)) {
       # save fitting results in new column in data fra,e
       fit.results.temp <- data.frame(plate.name = plates.used[pn], read.date = read.dates[rd], 
                                      drug.exp = drug.exp[drex], 
-                                     pos.mean,
+                                     pos.mean, 
+                                     EC50 = results$EC50,
+                                     Hill = results$Hill,
+                                     Bottom = results$Bottom,
+                                     Top = results$Top,
                                      Molar.sim, Molar.sim.log10,
                                      sim.gro, sim.par)
       
@@ -151,15 +159,11 @@ for (pn in 1:length(plates.used)) {
 }
 
 # Determine which EC50 values have a reasonable confidence interval
-# plate A - reasonable range
-results.fixed.combi.GF.par.Nr$CI.EC50.okay[results.fixed.combi.GF.par.Nr$plate.name == "A"] <- log10(results.fixed.combi.GF.par.Nr$EC50lo[results.fixed.combi.GF.par.Nr$plate.name == "A"]) > (-7.5) &  
-  log10(results.fixed.combi.GF.par.Nr$EC50hi[results.fixed.combi.GF.par.Nr$plate.name == "A"]) < (-2.5)
-# plate E - reasonable range
-results.fixed.combi.GF.par.Nr$CI.EC50.okay[results.fixed.combi.GF.par.Nr$plate.name == "E"] <- log10(results.fixed.combi.GF.par.Nr$EC50lo[results.fixed.combi.GF.par.Nr$plate.name == "E"]) > (-11.5) &  
-  log10(results.fixed.combi.GF.par.Nr$EC50hi[results.fixed.combi.GF.par.Nr$plate.name == "E"]) < (-6.5)
+results.fixed.combi.GF.par.Nr$CI.EC50.okay <- log10(results.fixed.combi.GF.par.Nr$EC50) - log10(results.fixed.combi.GF.par.Nr$EC50lo) <= 1 & 
+  log10(results.fixed.combi.GF.par.Nr$EC50hi) - log10(results.fixed.combi.GF.par.Nr$EC50) <= 1
+
 # no NAs
 results.fixed.combi.GF.par.Nr$CI.EC50.okay <- !is.na(results.fixed.combi.GF.par.Nr$CI.EC50.okay) & results.fixed.combi.GF.par.Nr$CI.EC50.okay
-
 
 
 # write necessary files into .RData file

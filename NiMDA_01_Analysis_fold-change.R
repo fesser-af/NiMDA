@@ -5,14 +5,14 @@
 ## of the daily change in parasite numbers (live imaging)
 ## Author : Anna Fesser
 ## date : 17.05.2019
-## last modified : 17.12.2019
+## last modified : 21.04.2020
 ## ==============================================
 
 # This script is intended to be used to build exponential models from parasite counts produced by time-lapse imaging (Fesser et al. 2020)
 
 # It is intended to be used with time-lapse data from high-content imaging
 # The different parameters should be adapted to your needs
-# Copyright (C) <2019> <Anna F. Fesser, Olivier Braissant, Francisco Olmo, 
+# Copyright (C) <2020> <Anna F. Fesser, Olivier Braissant, Francisco Olmo, 
 # John M. Kelly, Pascal Mäser, Marcel Kaiser>
 
 # This program is free software: you can redistribute it and/or modify

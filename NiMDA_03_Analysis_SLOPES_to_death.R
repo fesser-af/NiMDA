@@ -5,14 +5,14 @@
 ## Define DYING (tipping point of drug action)
 ## Author : Anna Fesser
 ## date : 25.05.2019
-## last modified : 17.12.2019
+## last modified : 21.04.2020
 ## ==============================================
 
 # This script is intended to be used to build define the tipping point of drug action from time-lapse parasite counts (Fesser et al. 2020)
 
 # It is intended to be used with exponential model results from time-lapse data from high-content imaging
 # The different parameters should be adapted to your needs
-# Copyright (C) <2019> <Anna F. Fesser, Olivier Braissant, Francisco Olmo, 
+# Copyright (C) <2020> <Anna F. Fesser, Olivier Braissant, Francisco Olmo, 
 # John M. Kelly, Pascal Mäser, Marcel Kaiser>
 
 # This program is free software: you can redistribute it and/or modify
